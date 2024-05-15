@@ -1,0 +1,36 @@
+{
+    "manifest_version": 2,
+    "name": "CacheControl",
+    "version": "1.0",
+    "description": "An extension to disable cache for specified websites.",
+    "permissions": [
+        "webRequest",
+        "webRequestBlocking",
+        "storage",
+        "https://*/*",
+        "http://*/*",
+        "http://localhost/*"
+    ],
+    "background": {
+        "scripts": ["dist/background.js"],
+        "persistent": true
+    },
+    "browser_action": {
+        "default_popup": "dist/popup.html",
+        "default_icon": {
+            "16": "icons/icon16.png",
+            "48": "icons/icon48.png",
+            "128": "icons/icon128.png"
+        }
+    },
+    "options_ui": {
+        "page": "dist/options.html",
+        "open_in_tab": true
+    },
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}

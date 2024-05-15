@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="stylesheet/index.css">
+        <title>CacheControl</title>
+    </head>
+
+    <body class="bg-background text-text p-6 font-sans">
+        <div class="max-w-3xl mx-auto bg-overlay p-6 rounded-lg shadow-lg">
+            <h1 class="text-4xl text-text font-bold mb-10 text-center">
+                <span class="text-accent">CacheControl</span> Options
+            </h1>
+
+            <section class="mb-10">
+                <h2 class="collapsible text-3xl text-accent hover:text-hover font-semibold mb-4">General</h2>
+                <div class="active mb-4">
+                    <div class="flex items-center mb-2">
+                        <input type="checkbox" id="enabled" class="mr-2">
+                        <label for="enabled" class="text-text">Enable</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="wildcard" class="mr-2">
+                        <label for="wildcard" class="text-text">Wildcard (*)</label>
+                    </div>
+                </div>
+                <hr class="border-subtle my-6">
+            </section>
+
+            <section class="mb-10">
+                <h2 class="collapsible text-3xl text-accent hover:text-hover font-semibold mb-4">Presets</h2>
+                <div class="hidden space-y-6 mb-4">
+
+                    <div>
+                        <h3 class="collapsible mb-2 text-xl text-text hover:text-muted font-semibold">React</h3>
+                        <div class="hidden space-y-2 pl-4">
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="react3000" class="mr-2 preset-checkbox">
+                                <label for="reactLocalhost3000" class="text-text">http://localhost:3000</label>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="react3001" class="mr-2 preset-checkbox">
+                                <label for="reactLocalhost3001" class="text-text">http://localhost:3001</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="collapsible mb-2 text-xl text-text hover:text-muted font-semibold">Python (JupyterLab)</h3>
+                        <div class="hidden space-y-2 pl-4">
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="jupyter8888" class="mr-2 preset-checkbox">
+                                <label for="jupyterLabLocalhost8888" class="text-text">http://localhost:8888</label>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="jupyter8889" class="mr-2 preset-checkbox">
+                                <label for="jupyterLabLocalhost8889" class="text-text">http://localhost:8889</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="collapsible mb-2 text-xl text-text hover:text-muted font-semibold">Node.js</h3>
+                        <div class="hidden space-y-2 pl-4">
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="node3002" class="mr-2 preset-checkbox">
+                                <label for="nodeLocalhost3002" class="text-text">http://localhost:3002</label>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="node3003" class="mr-2 preset-checkbox">
+                                <label for="nodeLocalhost3003" class="text-text">http://localhost:3003</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="collapsible mb-2 text-xl text-text hover:text-muted font-semibold">Docker</h3>
+                        <div class="hidden space-y-2 pl-4">
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="docker5000" class="mr-2 preset-checkbox">
+                                <label for="dockerLocalhost5000" class="text-text">http://localhost:5000</label>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="docker5001" class="mr-2 preset-checkbox">
+                                <label for="dockerLocalhost5001" class="text-text">http://localhost:5001</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="collapsible mb-2 text-xl text-text hover:text-muted font-semibold">Angular</h3>
+                        <div class="hidden space-y-2 pl-4">
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="angular4200" class="mr-2 preset-checkbox">
+                                <label for="angularLocalhost4200" class="text-text">http://localhost:4200</label>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="angular4201" class="mr-2 preset-checkbox">
+                                <label for="angularLocalhost4201" class="text-text">http://localhost:4201</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="border-subtle my-6">
+            </section>
+
+            <section class="mb-10">
+                <h2 class="collapsible text-3xl text-accent hover:text-hover font-semibold mb-4">Rules</h2>
+                <div class="active">
+                    <div class="mb-10">
+                        <h3 class="text-lg text-text font-semibold mb-2">Create a rule</h3>
+                        <form id="form" class="mb-4">
+                            <input type="text" id="url" class="w-full border border-muted bg-surface p-3 rounded-lg text-text placeholder-muted focus:outline-none focus:ring-2 focus:ring-accent" placeholder="Enter URL">
+                            <button type="submit" class="w-full bg-accent text-text py-3 rounded-lg font-semibold hover:bg-hover transition duration-200 mt-2">Add URL</button>
+                        </form>
+                    </div>
+
+                    <div class="overflow-y-auto max-h-64 mb-4">
+                        <h3 class="text-lg text-text font-semibold mb-2">Rules</h3>
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr>
+                                    <th class="py-2 px-4 bg-subtle text-text">URL</th>
+                                    <th class="py-2 px-4 bg-subtle text-text">Enable</th>
+                                    <th class="py-2 px-4 bg-subtle text-text">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="rules"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <hr class="border-subtle my-6">
+            </section>
+
+            <section class="mb-8">
+                <h2 class="collapsible text-3xl text-accent hover:text-hover font-semibold mb-4">Resources</h2>
+                <div class="active mb-4">
+                    <div class="flex flex-wrap">
+                        <div class="flex items-center mb-2 w-1/2">
+                            <input type="checkbox" id="all" class="mr-2 resource-checkbox">
+                            <label for="all" class="text-text">All</label>
+                        </div>
+                        <div class="flex items-center mb-2 w-1/2">
+                            <input type="checkbox" id="main_frame" class="mr-2 resource-checkbox">
+                            <label for="main_frame" class="text-text">Main Frame</label>
+                        </div>
+                        <div class="flex items-center mb-2 w-1/2">
+                            <input type="checkbox" id="sub_frame" class="mr-2 resource-checkbox">
+                            <label for="sub_frame" class="text-text">Sub Frame</label>
+                        </div>
+                        <div class="flex items-center mb-2 w-1/2">
+                            <input type="checkbox" id="stylesheet" class="mr-2 resource-checkbox">
+                            <label for="stylesheet" class="text-text">Stylesheet</label>
+                        </div>
+                        <div class="flex items-center mb-2 w-1/2">
+                            <input type="checkbox" id="script" class="mr-2 resource-checkbox">
+                            <label for="script" class="text-text">Script</label>
+                        </div>
+                        <div class="flex items-center mb-2 w-1/2">
+                            <input type="checkbox" id="image" class="mr-2 resource-checkbox">
+                            <label for="image" class="text-text">Image</label>
+                        </div>
+                        <div class="flex items-center mb-2 w-1/2">
+                            <input type="checkbox" id="font" class="mr-2 resource-checkbox">
+                            <label for="font" class="text-text">Font</label>
+                        </div>
+                        <div class="flex items-center mb-2 w-1/2">
+                            <input type="checkbox" id="object" class="mr-2 resource-checkbox">
+                            <label for="object" class="text-text">Object</label>
+                        </div>
+                        <div class="flex items-center mb-2 w-1/2">
+                            <input type="checkbox" id="xmlhttprequest" class="mr-2 resource-checkbox">
+                            <label for="xmlhttprequest" class="text-text">XMLHttpRequest</label>
+                        </div>
+                        <div class="flex items-center mb-2 w-1/2">
+                            <input type="checkbox" id="ping" class="mr-2 resource-checkbox">
+                            <label for="ping" class="text-text">Ping</label>
+                        </div>
+                        <div class="flex items-center mb-2 w-1/2">
+                            <input type="checkbox" id="csp_report" class="mr-2 resource-checkbox">
+                            <label for="csp_report" class="text-text">CSP Report</label>
+                        </div>
+                        <div class="flex items-center mb-2 w-1/2">
+                            <input type="checkbox" id="media" class="mr-2 resource-checkbox">
+                            <label for="media" class="text-text">Media</label>
+                        </div>
+                        <div class="flex items-center mb-2 w-1/2">
+                            <input type="checkbox" id="websocket" class="mr-2 resource-checkbox">
+                            <label for="websocket" class="text-text">WebSocket</label>
+                        </div>
+                        <div class="flex items-center mb-2 w-1/2">
+                            <input type="checkbox" id="other" class="mr-2 resource-checkbox">
+                            <label for="other" class="text-text">Other</label>
+                        </div>
+                    </div>
+                </div>
+                <hr class="border-subtle my-6">
+            </section>
+        </div>
+
+        <script src="options.js"></script>
+    </body>
+</html>

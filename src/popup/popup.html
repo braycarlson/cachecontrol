@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="stylesheet/index.css">
+        <title>CacheControl</title>
+    </head>
+
+    <body class="bg-background text-text p-6 font-sans">
+        <div class="max-w-lg mx-auto bg-overlay p-4 rounded-lg shadow-md">
+            <h1 class="text-3xl text-text font-bold mb-6 text-center"><span class="text-accent">CacheControl</span></h1>
+
+            <div class="mb-4">
+                <div class="flex items-center mb-2">
+                    <input type="checkbox" id="enabled" class="mr-2">
+                    <label for="enabled" class="text-text">Enable</label>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" id="wildcard" class="mr-2">
+                    <label for="wildcard" class="text-text">Wildcard (*)</label>
+                </div>
+            </div>
+
+            <hr class="border-subtle my-4">
+
+            <form id="form" class="mb-4">
+                <h3 class="text-lg text-text font-semibold mb-2">Create a rule</h3>
+                <input type="text" id="url" class="w-full border border-muted bg-surface p-3 rounded-lg text-text placeholder-muted focus:outline-none focus:ring-2 focus:ring-accent" placeholder="Enter URL">
+                <button type="submit" class="w-full bg-accent text-text py-3 rounded-lg font-semibold hover:bg-hover transition duration-200 mt-2">Add URL</button>
+            </form>
+
+            <hr class="border-subtle mt-4 mb-2">
+
+            <button id="settings" class="text-accent hover:text-hover py-3 rounded-lg font-semibold transition duration-200">Settings</button>
+        </div>
+
+        <script src="popup.js"></script>
+    </body>
+</html>

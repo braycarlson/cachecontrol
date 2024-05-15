@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+        "target": "ES6",
+        "lib": ["dom", "es6"],
+        "module": "commonjs",
+        "outDir": "./dist",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "typeRoots": [
+          "./types",
+          "./node_modules/@types"
+        ],
+        "forceConsistentCasingInFileNames": true,
+        "baseUrl": "./",
+        "paths": {
+            "*": ["src"]
+        }
+    },
+    "include": ["src", "types/**/*.d.ts"]
+}
