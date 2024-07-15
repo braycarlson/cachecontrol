@@ -1,12 +1,7 @@
 import browser from "webextension-polyfill";
+import { CACHE_DISABLED_HEADERS } from "../constant";
 import { getSettings } from "../storage";
 
-const CACHE_DISABLED_HEADERS = {
-    "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
-    Pragma: "no-cache",
-    Expires: "0",
-    "Surrogate-Control": "no-store"
-};
 
 function disableCache(
     details: browser.WebRequest.OnBeforeSendHeadersDetailsType |
@@ -37,12 +32,40 @@ function disableCache(
     }
 }
 
+function generateURL(url: string, wildcard: boolean, protocols: string[]): string[] {
+    const variations = new Set<string>();
+
+    // Add protocol if missing
+    if (!url.includes("://")) {
+        url = "https://" + url;
+    }
+
+    const obj = new URL(url);
+
+    const paths = [
+        obj.pathname,
+        obj.pathname.endsWith('/') ? obj.pathname : obj.pathname + '/'
+    ];
+
+    protocols.forEach(protocol => {
+        paths.forEach(path => {
+            const base = `${protocol}://${obj.host}${path}`;
+
+            variations.add(base);
+
+            if (wildcard) {
+                variations.add(`${base}*`);
+            }
+        });
+    });
+
+    return Array.from(variations);
+}
+
 async function register() {
-    const { urls, wildcard, enabled, resources } = await getSettings();
+    const { urls, enabled } = await getSettings();
 
     if (enabled && urls.length > 0) {
-        const patterns = wildcard ? urls.filter(u => u.enabled).map(url => `${url.url}/*`) : urls.filter(u => u.enabled).map(url => url.url);
-
         if (browser.webRequest.onBeforeSendHeaders.hasListener(disableCache)) {
             browser.webRequest.onBeforeSendHeaders.removeListener(disableCache);
         }
@@ -51,17 +74,26 @@ async function register() {
             browser.webRequest.onHeadersReceived.removeListener(disableCache);
         }
 
-        browser.webRequest.onBeforeSendHeaders.addListener(
-            disableCache,
-            { urls: patterns, types: resources as browser.WebRequest.ResourceType[] },
-            ["blocking", "requestHeaders"]
-        );
+        urls.forEach(entry => {
+            if (entry.enabled) {
+                const patterns = generateURL(entry.url, entry.wildcard, entry.protocols);
+                const resourceTypes = entry.resources.filter(r => r !== "all_resources") as browser.WebRequest.ResourceType[];
 
-        browser.webRequest.onHeadersReceived.addListener(
-            disableCache,
-            { urls: patterns, types: resources as browser.WebRequest.ResourceType[] },
-            ["blocking", "responseHeaders"]
-        );
+                if (patterns.length > 0 && resourceTypes.length > 0) {
+                    browser.webRequest.onBeforeSendHeaders.addListener(
+                        disableCache,
+                        { urls: patterns, types: resourceTypes },
+                        ["blocking", "requestHeaders"]
+                    );
+
+                    browser.webRequest.onHeadersReceived.addListener(
+                        disableCache,
+                        { urls: patterns, types: resourceTypes },
+                        ["blocking", "responseHeaders"]
+                    );
+                }
+            }
+        });
     } else {
         if (browser.webRequest.onBeforeSendHeaders.hasListener(disableCache)) {
             browser.webRequest.onBeforeSendHeaders.removeListener(disableCache);
@@ -72,8 +104,6 @@ async function register() {
     }
 }
 
-browser.storage.onChanged.addListener(register);
-register();
-
 browser.runtime.onStartup.addListener(register);
+browser.storage.onChanged.addListener(register);
 browser.runtime.onInstalled.addListener(register);

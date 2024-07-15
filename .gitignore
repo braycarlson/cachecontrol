@@ -1,5 +1,7 @@
 # CacheControl
+asset/logo/
 dist/
+icons/
 
 # Dependency directories
 node_modules/

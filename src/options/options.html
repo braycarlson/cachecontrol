@@ -8,7 +8,7 @@
     </head>
 
     <body class="bg-background text-text p-6 font-sans">
-        <div class="max-w-3xl mx-auto bg-overlay p-6 rounded-lg shadow-lg">
+        <div class="max-w-3xl mx-auto bg-overlay p-6 rounded-lg shadow-lg border-4 border-indigo-500">
             <h1 class="text-4xl text-text font-bold mb-10 text-center">
                 <span class="text-accent">CacheControl</span> Options
             </h1>
@@ -19,10 +19,6 @@
                     <div class="flex items-center mb-2">
                         <input type="checkbox" id="enabled" class="mr-2">
                         <label for="enabled" class="text-text">Enable</label>
-                    </div>
-                    <div class="flex items-center">
-                        <input type="checkbox" id="wildcard" class="mr-2">
-                        <label for="wildcard" class="text-text">Wildcard (*)</label>
                     </div>
                 </div>
                 <hr class="border-subtle my-6">
@@ -123,7 +119,9 @@
                                 <tr>
                                     <th class="py-2 px-4 bg-subtle text-text">URL</th>
                                     <th class="py-2 px-4 bg-subtle text-text">Enable</th>
-                                    <th class="py-2 px-4 bg-subtle text-text">Action</th>
+                                    <th class="py-2 px-4 bg-subtle text-text">Wildcard</th>
+                                    <th class="py-2 px-4 bg-subtle text-text">Settings</th>
+                                    <th class="py-2 px-4 bg-subtle text-text">Delete</th>
                                 </tr>
                             </thead>
                             <tbody id="rules"></tbody>
@@ -132,71 +130,89 @@
                 </div>
                 <hr class="border-subtle my-6">
             </section>
+        </div>
 
-            <section class="mb-8">
-                <h2 class="collapsible text-3xl text-accent hover:text-hover font-semibold mb-4">Resources</h2>
-                <div class="active mb-4">
-                    <div class="flex flex-wrap">
-                        <div class="flex items-center mb-2 w-1/2">
-                            <input type="checkbox" id="all" class="mr-2 resource-checkbox">
-                            <label for="all" class="text-text">All</label>
-                        </div>
-                        <div class="flex items-center mb-2 w-1/2">
-                            <input type="checkbox" id="main_frame" class="mr-2 resource-checkbox">
-                            <label for="main_frame" class="text-text">Main Frame</label>
-                        </div>
-                        <div class="flex items-center mb-2 w-1/2">
-                            <input type="checkbox" id="sub_frame" class="mr-2 resource-checkbox">
-                            <label for="sub_frame" class="text-text">Sub Frame</label>
-                        </div>
-                        <div class="flex items-center mb-2 w-1/2">
-                            <input type="checkbox" id="stylesheet" class="mr-2 resource-checkbox">
-                            <label for="stylesheet" class="text-text">Stylesheet</label>
-                        </div>
-                        <div class="flex items-center mb-2 w-1/2">
-                            <input type="checkbox" id="script" class="mr-2 resource-checkbox">
-                            <label for="script" class="text-text">Script</label>
-                        </div>
-                        <div class="flex items-center mb-2 w-1/2">
-                            <input type="checkbox" id="image" class="mr-2 resource-checkbox">
-                            <label for="image" class="text-text">Image</label>
-                        </div>
-                        <div class="flex items-center mb-2 w-1/2">
-                            <input type="checkbox" id="font" class="mr-2 resource-checkbox">
-                            <label for="font" class="text-text">Font</label>
-                        </div>
-                        <div class="flex items-center mb-2 w-1/2">
-                            <input type="checkbox" id="object" class="mr-2 resource-checkbox">
-                            <label for="object" class="text-text">Object</label>
-                        </div>
-                        <div class="flex items-center mb-2 w-1/2">
-                            <input type="checkbox" id="xmlhttprequest" class="mr-2 resource-checkbox">
-                            <label for="xmlhttprequest" class="text-text">XMLHttpRequest</label>
-                        </div>
-                        <div class="flex items-center mb-2 w-1/2">
-                            <input type="checkbox" id="ping" class="mr-2 resource-checkbox">
-                            <label for="ping" class="text-text">Ping</label>
-                        </div>
-                        <div class="flex items-center mb-2 w-1/2">
-                            <input type="checkbox" id="csp_report" class="mr-2 resource-checkbox">
-                            <label for="csp_report" class="text-text">CSP Report</label>
-                        </div>
-                        <div class="flex items-center mb-2 w-1/2">
-                            <input type="checkbox" id="media" class="mr-2 resource-checkbox">
-                            <label for="media" class="text-text">Media</label>
-                        </div>
-                        <div class="flex items-center mb-2 w-1/2">
-                            <input type="checkbox" id="websocket" class="mr-2 resource-checkbox">
-                            <label for="websocket" class="text-text">WebSocket</label>
-                        </div>
-                        <div class="flex items-center mb-2 w-1/2">
-                            <input type="checkbox" id="other" class="mr-2 resource-checkbox">
-                            <label for="other" class="text-text">Other</label>
-                        </div>
+        <div id="resourceModal" class="modal hidden fixed inset-0 bg-overlay bg-opacity-50 flex items-center justify-center">
+            <div class="modal-content bg-surface rounded-lg p-6 w-1/2 shadow-lg">
+                <h1 class="text-2xl mb-4 text-center font-bold"><span id="modalUrl" class="text-text"></span></h1>
+
+                <h2 class="text-2xl mb-4 text-accent">Resources</h2>
+                <div class="flex flex-wrap mb-4">
+                    <div class="flex items-center mb-2 w-1/2">
+                        <input type="checkbox" id="modal_all_resources" class="mr-2 modal-resource-checkbox">
+                        <label for="modal_all_resources" class="text-text">All</label>
+                    </div>
+                    <div class="flex items-center mb-2 w-1/2">
+                        <input type="checkbox" id="modal_main_frame" class="mr-2 modal-resource-checkbox">
+                        <label for="modal_main_frame" class="text-text">Main Frame</label>
+                    </div>
+                    <div class="flex items-center mb-2 w-1/2">
+                        <input type="checkbox" id="modal_sub_frame" class="mr-2 modal-resource-checkbox">
+                        <label for="modal_sub_frame" class="text-text">Sub Frame</label>
+                    </div>
+                    <div class="flex items-center mb-2 w-1/2">
+                        <input type="checkbox" id="modal_stylesheet" class="mr-2 modal-resource-checkbox">
+                        <label for="modal_stylesheet" class="text-text">Stylesheet</label>
+                    </div>
+                    <div class="flex items-center mb-2 w-1/2">
+                        <input type="checkbox" id="modal_script" class="mr-2 modal-resource-checkbox">
+                        <label for="modal_script" class="text-text">Script</label>
+                    </div>
+                    <div class="flex items-center mb-2 w-1/2">
+                        <input type="checkbox" id="modal_image" class="mr-2 modal-resource-checkbox">
+                        <label for="modal_image" class="text-text">Image</label>
+                    </div>
+                    <div class="flex items-center mb-2 w-1/2">
+                        <input type="checkbox" id="modal_font" class="mr-2 modal-resource-checkbox">
+                        <label for="modal_font" class="text-text">Font</label>
+                    </div>
+                    <div class="flex items-center mb-2 w-1/2">
+                        <input type="checkbox" id="modal_object" class="mr-2 modal-resource-checkbox">
+                        <label for="modal_object" class="text-text">Object</label>
+                    </div>
+                    <div class="flex items-center mb-2 w-1/2">
+                        <input type="checkbox" id="modal_xmlhttprequest" class="mr-2 modal-resource-checkbox">
+                        <label for="modal_xmlhttprequest" class="text-text">XMLHttpRequest</label>
+                    </div>
+                    <div class="flex items-center mb-2 w-1/2">
+                        <input type="checkbox" id="modal_ping" class="mr-2 modal-resource-checkbox">
+                        <label for="modal_ping" class="text-text">Ping</label>
+                    </div>
+                    <div class="flex items-center mb-2 w-1/2">
+                        <input type="checkbox" id="modal_csp_report" class="mr-2 modal-resource-checkbox">
+                        <label for="modal_csp_report" class="text-text">CSP Report</label>
+                    </div>
+                    <div class="flex items-center mb-2 w-1/2">
+                        <input type="checkbox" id="modal_media" class="mr-2 modal-resource-checkbox">
+                        <label for="modal_media" class="text-text">Media</label>
+                    </div>
+                    <div class="flex items-center mb-2 w-1/2">
+                        <input type="checkbox" id="modal_websocket" class="mr-2 modal-resource-checkbox">
+                        <label for="modal_websocket" class="text-text">WebSocket</label>
+                    </div>
+                    <div class="flex items-center mb-2 w-1/2">
+                        <input type="checkbox" id="modal_other" class="mr-2 modal-resource-checkbox">
+                        <label for="modal_other" class="text-text">Other</label>
                     </div>
                 </div>
-                <hr class="border-subtle my-6">
-            </section>
+
+                <h2 class="text-2xl mb-4 text-accent">Protocols</h2>
+                <div class="flex flex-wrap mb-4">
+                    <div class="flex items-center mb-2 w-1/2">
+                        <input type="checkbox" id="modal_http" class="mr-2 modal-protocol-checkbox">
+                        <label for="modal_http" class="text-text">HTTP</label>
+                    </div>
+                    <div class="flex items-center mb-2 w-1/2">
+                        <input type="checkbox" id="modal_https" class="mr-2 modal-protocol-checkbox">
+                        <label for="modal_https" class="text-text">HTTPS</label>
+                    </div>
+                </div>
+
+                <div class="flex justify-end">
+                    <button id="modalSave" class="bg-accent text-text py-2 px-4 rounded-lg mr-2 hover:bg-hover">Save</button>
+                    <button id="modalCancel" class="bg-subtle text-text py-2 px-4 rounded-lg hover:bg-hover">Cancel</button>
+                </div>
+            </div>
         </div>
 
         <script src="options.js"></script>

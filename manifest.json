@@ -18,9 +18,10 @@
     "browser_action": {
         "default_popup": "dist/popup.html",
         "default_icon": {
-            "16": "icons/icon16.png",
-            "48": "icons/icon48.png",
-            "128": "icons/icon128.png"
+            "16": "icons/cachecontrol-16.png",
+            "32": "icons/cachecontrol-32.png",
+            "48": "icons/cachecontrol-48.png",
+            "128": "icons/cachecontrol-128.png"
         }
     },
     "options_ui": {
@@ -28,9 +29,10 @@
         "open_in_tab": true
     },
     "icons": {
-        "16": "icons/icon16.png",
-        "48": "icons/icon48.png",
-        "128": "icons/icon128.png"
+        "16": "icons/cachecontrol-16.png",
+        "32": "icons/cachecontrol-32.png",
+        "48": "icons/cachecontrol-48.png",
+        "128": "icons/cachecontrol-128.png"
     },
-    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+    "content_security_policy": "script-src 'self'; object-src 'self';"
 }
