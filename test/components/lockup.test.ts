@@ -15,6 +15,13 @@ describe("BrandLockup", () => {
         expect(mount(BrandLockup).text()).toBe("cachecontrol");
     });
 
+    it("announces the product name rather than the split wordmark", () => {
+        const wrapper = mount(BrandLockup);
+
+        expect(wrapper.attributes("role")).toBe("img");
+        expect(wrapper.attributes("aria-label")).toBe("CacheControl");
+    });
+
     it("scales the tile, the mark and the wordmark off the lockup's own ratios", () => {
         const wrapper = mount(BrandLockup, { props: { size: 72 } });
         const [, tile] = wrapper.findAll("span");

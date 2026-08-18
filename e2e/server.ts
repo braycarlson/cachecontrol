@@ -171,8 +171,8 @@ function htmlWrite(response: ServerResponse, body: string): void {
     response.end(body);
 }
 
-function page(load: number, loads: number): string {
-    const next = load < loads ? `/page?load=${load + 1}&loads=${loads}` : "/done";
+function page(load: number, loads: number, chain: boolean): string {
+    const next = load < loads ? `/page?load=${load + 1}&loads=${loads}&chain=1` : "/done";
 
     return [
         "<!doctype html><html><head><meta charset=\"utf-8\"><title>CacheControl harness</title>",
@@ -180,7 +180,9 @@ function page(load: number, loads: number): string {
         "</head><body><p id=\"load\">",
         String(load),
         "</p><script>",
-        `addEventListener("load", () => { setTimeout(() => { location.href = ${JSON.stringify(next)}; }, ${REDIRECT_DELAY_MS}); });`,
+        chain
+            ? `addEventListener("load", () => { setTimeout(() => { location.href = ${JSON.stringify(next)}; }, ${REDIRECT_DELAY_MS}); });`
+            : "",
         "</script></body></html>",
     ].join("");
 }
@@ -244,6 +246,7 @@ function respond(target: URL, response: ServerResponse): void {
     htmlWrite(response, page(
         Number(target.searchParams.get("load") ?? "1"),
         Number(target.searchParams.get("loads") ?? "1"),
+        target.searchParams.get("chain") === "1",
     ));
 }
 
@@ -251,7 +254,7 @@ function warmup(loads: number): string {
     return [
         "<!doctype html><html><head><meta charset=\"utf-8\"><title>CacheControl warmup</title></head>",
         "<body><p>Waiting for the extension to install.</p><script>",
-        `setTimeout(() => { location.href = "/page?load=1&loads=${loads}"; }, ${WARMUP_MS});`,
+        `setTimeout(() => { location.href = "/page?load=1&loads=${loads}&chain=1"; }, ${WARMUP_MS});`,
         "</script></body></html>",
     ].join("");
 }

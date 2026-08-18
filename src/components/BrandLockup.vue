@@ -15,7 +15,12 @@ const LOCKUP_TRACKING = "-0.025em";
 </script>
 
 <template>
-    <span class="inline-flex items-center" :style="{ gap: `${size * LOCKUP_GAP_RATIO}px` }">
+    <span
+        role="img"
+        aria-label="CacheControl"
+        class="inline-flex items-center"
+        :style="{ gap: `${size * LOCKUP_GAP_RATIO}px` }"
+    >
         <span
             class="inline-flex shrink-0 items-center justify-center bg-brand-tile text-brand-ink"
             :style="{

@@ -153,7 +153,7 @@ test.describe.serial("the extension pages", () => {
 
         await popup.goto(`chrome-extension://${loaded.id}/src/popup/index.html`);
 
-        await expect(popup.getByText("CacheControl", { exact: true })).toBeVisible();
+        await expect(popup.getByRole("img", { name: "CacheControl" })).toBeVisible();
         await expect(popup.getByRole("switch", { name: "Enable CacheControl" })).toBeVisible();
         await expect(popup.getByRole("switch")).toHaveCount(1);
 
