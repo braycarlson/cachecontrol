@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { ICONS } from "./icons";
+import { ICONS, STROKE_WIDTHS } from "./icons";
 import type { IconName } from "./icons";
 
 const { size = 16 } = defineProps<{ name: IconName; size?: number }>();
+
+const STROKE_WIDTH_DEFAULT = 1.5;
 </script>
 
 <template>
@@ -11,11 +13,11 @@ const { size = 16 } = defineProps<{ name: IconName; size?: number }>();
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
-        stroke-width="1.5"
         stroke-linecap="round"
         stroke-linejoin="round"
         aria-hidden="true"
         focusable="false"
+        :stroke-width="STROKE_WIDTHS[name] ?? STROKE_WIDTH_DEFAULT"
         :width="size"
         :height="size"
     >

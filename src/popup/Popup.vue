@@ -2,6 +2,7 @@
 import BaseButton from "../components/BaseButton.vue";
 import BaseField from "../components/BaseField.vue";
 import BaseIcon from "../components/BaseIcon.vue";
+import BrandLockup from "../components/BrandLockup.vue";
 import BaseSwitch from "../components/BaseSwitch.vue";
 import BaseToast from "../components/BaseToast.vue";
 import browser from "webextension-polyfill";
@@ -102,10 +103,7 @@ async function siteCurrentAdd(): Promise<void> {
     <div class="flex w-[340px] min-h-[180px] flex-col">
         <template v-if="loaded">
             <header class="flex items-center justify-between gap-3 border-b border-border px-4 py-3">
-                <div class="flex items-center gap-2">
-                    <BaseIcon name="mark" class="text-accent" :size="20" />
-                    <span class="text-sm font-semibold">CacheControl</span>
-                </div>
+                <BrandLockup :size="26" />
 
                 <BaseSwitch
                     :model-value="settings.enabled"

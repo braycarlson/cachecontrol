@@ -1,6 +1,7 @@
 import AboutSection from "../../src/options/components/AboutSection.vue";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { mount } from "@vue/test-utils";
+import { REPOSITORY_URL } from "../../src/constant";
 import { testBrowser } from "../browser";
 
 type Wrapper = ReturnType<typeof mount<typeof AboutSection>>;
@@ -39,5 +40,13 @@ describe("AboutSection", () => {
 
         expect(text).toContain("declarativeNetRequest");
         expect(text).toContain("V3");
+    });
+
+    it("links out to the repository in a new tab", () => {
+        const link = open(2).get("a");
+
+        expect(link.attributes("href")).toBe(REPOSITORY_URL);
+        expect(link.attributes("target")).toBe("_blank");
+        expect(link.attributes("rel")).toBe("noopener noreferrer");
     });
 });

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import BaseIcon from "../../components/BaseIcon.vue";
+import BrandLockup from "../../components/BrandLockup.vue";
 import browser from "webextension-polyfill";
+import { REPOSITORY_URL } from "../../constant";
 
 const { manifest_version: manifest, version } = browser.runtime.getManifest();
 
@@ -14,16 +16,12 @@ const facts = [
 <template>
     <section>
         <div class="rounded-lg border border-border bg-surface-1 px-4 py-4">
-            <div class="flex items-center gap-3">
-                <BaseIcon name="mark" class="shrink-0 text-accent" :size="24" />
+            <div class="flex flex-col gap-2">
+                <BrandLockup :size="28" />
 
-                <div class="min-w-0">
-                    <p class="text-sm font-medium">CacheControl</p>
-
-                    <p class="text-xs text-text-secondary">
-                        An extension that disables the browser cache for the sites you name.
-                    </p>
-                </div>
+                <p class="text-xs text-text-secondary">
+                    An extension that disables the browser cache for the sites you name.
+                </p>
             </div>
 
             <dl class="mt-4 divide-y divide-border border-t border-border">
@@ -32,6 +30,16 @@ const facts = [
                     <dd class="font-mono text-xs">{{ fact.value }}</dd>
                 </div>
             </dl>
+
+            <a
+                :href="REPOSITORY_URL"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-4 inline-flex items-center gap-1.5 text-xs font-medium text-accent hover:underline"
+            >
+                View on GitHub
+                <BaseIcon name="external" :size="12" />
+            </a>
         </div>
     </section>
 </template>

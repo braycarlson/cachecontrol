@@ -72,6 +72,8 @@ export const RULE_GROUP_NAME_LENGTH_MAX = 24;
 
 export const RULE_NAME_LENGTH_MAX = 60;
 
+export const REPOSITORY_URL = "https://github.com/braycarlson/cachecontrol";
+
 assert(
     RULES_COUNT_MAX * PROTOCOLS_DEFAULT.length <= DNR_RULES_COUNT_MAX,
     "the worst-case compiled output fits the browser's dynamic rule ceiling",

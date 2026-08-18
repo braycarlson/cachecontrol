@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import AboutSection from "./components/AboutSection.vue";
 import BaseButton from "../components/BaseButton.vue";
-import BaseIcon from "../components/BaseIcon.vue";
 import BaseToast from "../components/BaseToast.vue";
+import BrandLockup from "../components/BrandLockup.vue";
 import GeneralSection from "./components/GeneralSection.vue";
 import GroupsSection from "./components/GroupsSection.vue";
 import PresetSection from "./components/PresetSection.vue";
@@ -172,9 +172,10 @@ async function ruleToggle(url: string, enabled: boolean): Promise<void> {
 
 <template>
     <div class="mx-auto max-w-4xl px-6 py-8">
-        <header class="mb-8 flex items-center gap-2">
-            <BaseIcon name="mark" class="text-accent" :size="22" />
-            <h1 class="text-base font-semibold">CacheControl</h1>
+        <header class="mb-8">
+            <h1>
+                <BrandLockup :size="32" />
+            </h1>
         </header>
 
         <div

@@ -47,6 +47,23 @@ bunx web-ext sign \
 
 The reviewer needs the build to be reproducible from that archive, so `README.md` carries the toolchain versions and the exact commands under "Development".
 
+### Vendored Fonts
+
+Three binary font files sit under `src/stylesheet/fonts`, and a reviewer reading the source archive cannot tell from the bytes alone what they are. The two IBM Plex Sans files carry the wordmark and nothing else, which is why each holds nine glyphs.
+
+```sh
+bun add -d @fontsource/ibm-plex-sans
+pyftsubset node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2 \
+    --text="cachecontrol" \
+    --flavor=woff2 \
+    --layout-features='' \
+    --no-hinting \
+    --desubroutinize \
+    --output-file=src/stylesheet/fonts/ibm-plex-sans-400-latin.woff2
+```
+
+The 700 weight takes the same command with the weight changed in both paths. The subset drops the pair from 45 KB to 2.2 KB, and Vite inlines both as data URIs because each lands under its 4 KB threshold. The provenance of `inter-variable-latin.woff2` predates this note and is not recorded anywhere.
+
 ### Chrome
 
 The artifact is `dist/cachecontrol-chrome.zip`, uploaded through the Chrome Web Store developer dashboard.
