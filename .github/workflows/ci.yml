@@ -1,0 +1,90 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  check:
+    name: Type check, lint, and unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - run: bun install --frozen-lockfile
+
+      - run: bun run check
+
+  build:
+    name: Build and package both targets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - run: bun install --frozen-lockfile
+
+      - run: bun run package
+
+      - name: Lint the Firefox artifact
+        run: bun run lint:extension
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: cachecontrol-firefox
+          path: dist/cachecontrol-firefox.zip
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: cachecontrol-chrome
+          path: dist/cachecontrol-chrome.zip
+
+  chromium:
+    name: Chromium end to end
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - run: bun install --frozen-lockfile
+
+      - run: bunx playwright install --with-deps chromium
+
+      - run: bun run e2e:chromium
+
+      - if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report
+          path: playwright-report
+
+  firefox:
+    name: Firefox end to end
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - run: bun install --frozen-lockfile
+
+      - name: Install Firefox and a virtual display
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends --yes firefox xvfb
+
+      - run: xvfb-run --auto-servernum bun run e2e:firefox

@@ -1,7 +1,7 @@
 # CacheControl
-asset/logo/
 dist/
-icons/
+
+notes.txt
 
 # Dependency directories
 node_modules/
@@ -37,3 +37,6 @@ yarn-error.log*
 *.pnp
 .pnp.js
 coverage/
+playwright-report/
+test-results/
+web-ext-artifacts/

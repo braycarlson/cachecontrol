@@ -1,21 +1,52 @@
 {
-  "compilerOptions": {
-        "target": "ES6",
-        "lib": ["dom", "es6"],
-        "module": "commonjs",
-        "outDir": "./dist",
-        "strict": true,
-        "esModuleInterop": true,
-        "skipLibCheck": true,
-        "typeRoots": [
-          "./types",
-          "./node_modules/@types"
+    "compilerOptions": {
+        "target": "ESNext",
+        "lib": [
+            "DOM",
+            "DOM.Iterable",
+            "ESNext"
         ],
+        "module": "ESNext",
+        "moduleResolution": "Bundler",
+        "moduleDetection": "force",
+        "types": [
+            "node",
+            "vite/client"
+        ],
+
+        "strict": true,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "exactOptionalPropertyTypes": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "noUncheckedIndexedAccess": true,
+        "noUncheckedSideEffectImports": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "strictBuiltinIteratorReturn": true,
+        "useUnknownInCatchVariables": true,
+
+        "erasableSyntaxOnly": true,
+        "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
-        "baseUrl": "./",
-        "paths": {
-            "*": ["src"]
-        }
+        "isolatedModules": true,
+        "noEmit": true,
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
+        "useDefineForClassFields": true,
+        "verbatimModuleSyntax": true
     },
-    "include": ["src", "types/**/*.d.ts"]
+    "include": [
+        "e2e/**/*.ts",
+        "eslint.config.ts",
+        "src/**/*.d.ts",
+        "src/**/*.ts",
+        "src/**/*.vue",
+        "test/**/*.ts",
+        "vite.config.ts",
+        "vitest.config.ts"
+    ]
 }

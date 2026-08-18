@@ -1,22 +1,41 @@
 {
-    "manifest_version": 2,
+    "{{firefox}}.manifest_version": 2,
+    "{{chrome}}.manifest_version": 3,
     "name": "CacheControl",
-    "version": "1.0",
     "description": "An extension to disable cache for specified websites.",
-    "permissions": [
+    "{{firefox}}.permissions": [
         "webRequest",
         "webRequestBlocking",
         "storage",
-        "https://*/*",
-        "http://*/*",
-        "http://localhost/*"
+        "<all_urls>"
     ],
-    "background": {
-        "scripts": ["dist/background.js"],
+    "{{chrome}}.permissions": [
+        "declarativeNetRequest",
+        "storage"
+    ],
+    "{{chrome}}.host_permissions": [
+        "<all_urls>"
+    ],
+    "{{firefox}}.background": {
+        "scripts": [
+            "src/background/background.ts"
+        ],
         "persistent": true
     },
-    "browser_action": {
-        "default_popup": "dist/popup.html",
+    "{{chrome}}.background": {
+        "service_worker": "src/background/background.ts"
+    },
+    "{{firefox}}.browser_action": {
+        "default_popup": "src/popup/index.html",
+        "default_icon": {
+            "16": "icons/cachecontrol-16.png",
+            "32": "icons/cachecontrol-32.png",
+            "48": "icons/cachecontrol-48.png",
+            "128": "icons/cachecontrol-128.png"
+        }
+    },
+    "{{chrome}}.action": {
+        "default_popup": "src/popup/index.html",
         "default_icon": {
             "16": "icons/cachecontrol-16.png",
             "32": "icons/cachecontrol-32.png",
@@ -25,7 +44,7 @@
         }
     },
     "options_ui": {
-        "page": "dist/options.html",
+        "page": "src/options/index.html",
         "open_in_tab": true
     },
     "icons": {
@@ -34,5 +53,17 @@
         "48": "icons/cachecontrol-48.png",
         "128": "icons/cachecontrol-128.png"
     },
-    "content_security_policy": "script-src 'self'; object-src 'self';"
+    "{{firefox}}.browser_specific_settings": {
+        "gecko": {
+            "data_collection_permissions": {
+                "required": [
+                    "none"
+                ]
+            },
+            "id": "{67ff6b13-5c99-4f81-ba95-eebbc5be8f6f}",
+            "strict_min_version": "115.0"
+        }
+    },
+    "{{chrome}}.minimum_chrome_version": "120",
+    "{{firefox}}.content_security_policy": "script-src 'self'; object-src 'self';"
 }
