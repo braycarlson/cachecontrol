@@ -1,8 +1,8 @@
 <p align="center">
     <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="assets/cachecontrol-banner-on-dark-2560x640.png">
-        <source media="(prefers-color-scheme: light)" srcset="assets/cachecontrol-banner-on-light-2560x640.png">
-        <img alt="cachecontrol" src="assets/cachecontrol-banner-on-light-2560x640.png" width="640">
+        <source media="(prefers-color-scheme: dark)" srcset="assets/cachecontrol-lockup-on-dark.png">
+        <source media="(prefers-color-scheme: light)" srcset="assets/cachecontrol-lockup-on-light.png">
+        <img alt="cachecontrol" src="assets/cachecontrol-lockup-on-dark.png" width="640">
     </picture>
 </p>
 
